@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 
 using std::cout;
 using std::cerr;
@@ -17,6 +18,7 @@ enum Type{
 	BOOLEAN,
 	OBJECT,
 	ARRAY,
+	KEY,
 	UNDEFINED
 };
 
@@ -27,8 +29,9 @@ protected:
 	const char* word;
 	bool boolean;
 	vector <Variable>* array;
+	map <string,Variable> ob;
 public:
-
+	
 
 	Variable() {
 		type = UNDEFINED;
@@ -73,12 +76,23 @@ public:
 
 	}
 
+	map<string,Variable> getObj(){
+		return this->ob;
+	}
+
+	void setObj(map<string,Variable> obj)
+	{
+		this->ob = obj;
+	}
+
 	auto begin() {
 		return array->begin();
 	}
+
 	auto end() {
 		return array->end();
 	}
+	
 	Variable& operator[] (size_t index){
 		return this->array->at(index);
 	}
@@ -86,8 +100,6 @@ public:
 	Variable operator[] (size_t index) const{
 		return   (*const_cast<Variable*>(this))[index] ;
 	}
-
-	
 
 };
 
@@ -147,6 +159,44 @@ class Array: public Variable{
     }
 };
 
+template <typename T, typename U>
+class Object:public Variable{
+	public:
+	map<string, Variable> ob;
+    Object(const T& key, const U& val)
+    {
+		cout << "Called object contructor" <<endl;
+        ob[key] = val;
+		setType(OBJECT);
+		setObj(ob);
+    }
+
+    Object<T, U>& operator()(const T& key, const U& val)
+    {
+        ob[key] = val;
+		setType(OBJECT);
+		setObj(ob);
+        return *this;
+    }
+
+    operator std::map<T, U>()
+    {
+        return ob;
+    }	
+};
+
+class Key: public Variable{
+	public:
+	Key()
+	{
+		setType(KEY);
+	}
+	Key(string k)
+	{
+		setType(KEY);
+	}
+};
+
 string toString(Variable json)
 {
 	switch(json.getType()){
@@ -160,7 +210,12 @@ string toString(Variable json)
 			return ( json.getBool() ? "true" : "false" );
 		}
 		case 3:{
-			return "OBJECT";
+			string sb = "{ ";
+			for (const auto& p : json.getObj() ) {
+				sb += p.first + " ";
+			}
+			sb+="}";
+			return sb;
 		}
 		case 4:{
 			string sb = "[ ";
@@ -171,6 +226,9 @@ string toString(Variable json)
 			return sb;
 		}
 		case 5:{
+			return "KEY";
+		}
+		case 6:{
 			return "Undefined";
 		}
 		default:
@@ -179,6 +237,14 @@ string toString(Variable json)
 }
 void print(Variable json){
 	cout << toString(json) << endl;
+}
+
+void DeleteFromMapOrVector(Variable json)
+{
+	if(json.getType() == ARRAY)
+	{
+
+	}
 }
 
 #endif //JSONLANG_H

@@ -1,7 +1,14 @@
 #include "JSONlang.h"
 #include <cstring>
 
-bool operator== (Variable left , Variable right)    
+template<typename T>
+bool isEqual(std::vector<T> const &v1, std::vector<T> const &v2)
+{
+    return (v1.size() == v2.size() &&
+            std::equal(v1.begin(), v1.end(), v2.begin()));
+}
+
+Variable operator== (Variable left , Variable right)    
 {
     if(left.getType() != right.getType())
     {
@@ -11,20 +18,20 @@ bool operator== (Variable left , Variable right)
     switch(left.getType())
     {
         case 0://NUMBER
-            return left.getNumber() == right.getNumber();
+            return *(new Number(left.getNumber() == right.getNumber()));
         case 1://STRING
-            return left.getWord() == right.getWord();
+            return *(new String(left.getWord()));
         case 2://BOOLEAN
-            return left.getBool() == right.getBool();
+            return *(new Boolean(left.getBool() == right.getBool()));
         case 3://OBJECT
-            return false;
+            return NULL;
         case 4://ARRAY
-            return false;
+            return NULL;
         case 5://UNDEFINED
-            return false;
+            return NULL;
         default:{//DEFAULT
             cout << "SHOULD NEVER REACH THIS POINT!" <<endl;
-            return false;
+            return NULL;
         }
     }
 }
@@ -84,7 +91,7 @@ Variable operator<  (Variable left , Variable right)
         cout << "Task failed succesfully! Must compare (<) only numbers!" << endl;
         exit(0);
     }
-    return *(new Number(right.getNumber() < left.getNumber()));
+    return *(new Number(left.getNumber() < right.getNumber()));
 }
 Variable operator>  (Variable left , Variable right)    
 {
@@ -93,7 +100,7 @@ Variable operator>  (Variable left , Variable right)
         cout << "Task failed succesfully! Must compare (>) only numbers!" << endl;
         exit(0);
     }
-    return *(new Number(right.getNumber() > left.getNumber()));
+    return *(new Number(left.getNumber() > right.getNumber()));
 }
 Variable operator<= (Variable left , Variable right)    
 {
@@ -102,7 +109,7 @@ Variable operator<= (Variable left , Variable right)
         cout << "Task failed succesfully! Must compare (<=) only numbers!" << endl;
         exit(0);
     }
-    return *(new Number(right.getNumber() <= left.getNumber()));
+    return *(new Number(left.getNumber() <= right.getNumber()));
 }
 Variable operator>= (Variable left , Variable right)    
 {
@@ -111,7 +118,7 @@ Variable operator>= (Variable left , Variable right)
         cout << "Task failed succesfully! Must compare (>=) only numbers!" << endl;
         exit(0);
     }
-    return *(new Number(right.getNumber() >= left.getNumber()));
+    return *(new Number(left.getNumber() >= right.getNumber()));
 }
 
 Variable operator+  (Variable left , Variable right)    
@@ -148,7 +155,7 @@ Variable operator-  (Variable left , Variable right)
         cout << "Task failed succesfully! Must subtract only numbers!" << endl;
         exit(0);
     }
-    return *(new Number(right.getNumber() - left.getNumber()));
+    return *(new Number(left.getNumber() - right.getNumber()));
 }
 
 Variable operator*  (Variable left , Variable right)    
@@ -158,7 +165,7 @@ Variable operator*  (Variable left , Variable right)
         cout << "Task failed succesfully! Must multiply only numbers!" << endl;
         exit(0);
     }
-    return *(new Number(right.getNumber() * left.getNumber()));
+    return *(new Number(left.getNumber() * right.getNumber()));
 }
 
 Variable operator/  (Variable left , Variable right)    
@@ -168,7 +175,7 @@ Variable operator/  (Variable left , Variable right)
         cout << "Task failed succesfully! Must div only numbers!" << endl;
         exit(0);
     }
-    return *(new Number(right.getNumber() / left.getNumber()));
+    return *(new Number(left.getNumber() / right.getNumber()));
 }
 
 Variable operator%  (Variable left , Variable right)    
@@ -178,7 +185,7 @@ Variable operator%  (Variable left , Variable right)
         cout << "Task failed succesfully! Must module only numbers!" << endl;
         exit(0);
     }
-    return *(new Number(static_cast<int>(right.getNumber()) % static_cast<int>(left.getNumber())));
+    return *(new Number(static_cast<int>(left.getNumber()) % static_cast<int>(right.getNumber())));
 }
 
 

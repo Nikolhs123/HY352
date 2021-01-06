@@ -27,6 +27,16 @@
 
 #define ASSIGN =
 
+#define ERASE( ptr ) \
+ptr.getArray().clear();  \
+
+
+#define OBJECT Object<string, Variable >
+
+// #define OBJECT (*(new Object()));
+
+#define KEY(x) Key(x) : (true)?1;
+
 #define SIZE_OF(x) ;Sizeof(x)
 
 #define IS_EMPTY(x) ;IsEmpty(x)
