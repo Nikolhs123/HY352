@@ -58,6 +58,14 @@ PRINT(week_temperatures)
 //set third position of array as value 22
 SET week_temperatures[2] ASSIGN NUMBER(22)
 
+SET week_temperatures APPEND string1, string2
+// SET week_temperatures APPEND NUMBER(85)
+
+;
+Variable v ;
+v.array += string1, string2;
+;
+
 //print again to see that value has changed
 PRINT(week_temperatures)
 
@@ -67,11 +75,9 @@ JSON(obj) = OBJECT
 PRINT(obj)
 
 JSON(obj2) = OBJECT 
-    ("lalala",string1) 
+    ("lala",string1) 
     ("iw", string2)
 PRINT(obj2)
-
-;ERASE(array1)
 
 //sum of objects, arrays ,strings and numbers
 JSON(sumarr) = array1 + array2

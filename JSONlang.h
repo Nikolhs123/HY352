@@ -28,10 +28,10 @@ protected:
 	double number;
 	const char* word;
 	bool boolean;
-	vector <Variable>* array;
+	
 	map <string,Variable> ob;
 public:
-	
+	vector <Variable>* array;
 
 	Variable() {
 		type = UNDEFINED;
@@ -100,7 +100,6 @@ public:
 	Variable operator[] (size_t index) const{
 		return   (*const_cast<Variable*>(this))[index] ;
 	}
-
 };
 
 class Number : public Variable {
@@ -185,15 +184,37 @@ class Object:public Variable{
     }	
 };
 
+template <typename T> 
+class vector_adder 
+{
+public:
+    std::vector<T>& v;
+    vector_adder(std::vector<T>& v):v(v)
+    {  }
+
+    vector_adder& operator,(const T& val)
+    {  
+       v.push_back(val);
+       return *this;
+    }
+};
+
+template <typename T> 
+vector_adder<T> operator+=(std::vector<T>& v,const T& x)
+{
+    return vector_adder<T>(v),x;
+};
+
 class Key: public Variable{
 	public:
 	Key()
 	{
 		setType(KEY);
 	}
-	Key(string k)
+	Key(const char* k)
 	{
 		setType(KEY);
+		this->word = k;
 	}
 };
 

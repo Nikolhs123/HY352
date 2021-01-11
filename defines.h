@@ -5,9 +5,9 @@
 
 #define PROGRAM_END ; return 0; }
 
-#define TRUE true
+#define TRUE 1
 
-#define FALSE false
+#define FALSE 0
 
 #define JSON ;Variable
 
@@ -27,15 +27,11 @@
 
 #define ASSIGN =
 
-#define ERASE( ptr ) \
-ptr.getArray().clear();  \
-
-
 #define OBJECT Object<string, Variable >
 
-// #define OBJECT (*(new Object()));
+#define KEY(name) Key(name) , 0?-1 
 
-#define KEY(x) Key(x) : (true)?1;
+#define APPEND .getArray()+=
 
 #define SIZE_OF(x) ;Sizeof(x)
 
