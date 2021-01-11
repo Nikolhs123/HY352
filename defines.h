@@ -31,7 +31,7 @@
 
 #define KEY(name) Key(name) , 0?-1 
 
-#define APPEND .getArray()+=
+//#define APPEND .getArray()+=
 
 #define SIZE_OF(x) ;Sizeof(x)
 

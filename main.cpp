@@ -58,13 +58,13 @@ PRINT(week_temperatures)
 //set third position of array as value 22
 SET week_temperatures[2] ASSIGN NUMBER(22)
 
-SET week_temperatures APPEND string1, string2
+//SET week_temperatures APPEND string1, string2
 // SET week_temperatures APPEND NUMBER(85)
 
-;
-Variable v ;
-v.array += string1, string2;
-;
+// ;
+// Variable v ;
+// v.array += string1, string2;
+// ;
 
 //print again to see that value has changed
 PRINT(week_temperatures)
